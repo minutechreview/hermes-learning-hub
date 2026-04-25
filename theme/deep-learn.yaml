@@ -1,0 +1,111 @@
+name: deep-learn
+label: Deep Learn
+description: >
+  Dark academia meets cyber-learning. A scholarly HUD for knowledge
+  operations — deep navy canvases, teal data accents, gold highlights,
+  and engineering-grid texture.
+
+palette:
+  background: "#080c1a"
+  midground: "#0f1525"
+  foreground: "#e8ecf3"
+  warmGlow: "#00d4aa"
+  noiseOpacity: 0.03
+
+typography:
+  headingFont: "'Crimson Pro', 'Georgia', serif"
+  bodyFont: "'Inter', 'Segoe UI', sans-serif"
+  monoFont: "'JetBrains Mono', 'Fira Code', monospace"
+  baseSize: 15
+  scale: 1.18
+  lineHeight: 1.55
+
+layout:
+  radius: 2
+  density: compact
+
+layoutVariant: standard
+
+assets:
+  bg: "https://images.unsplash.com/photo-1516979187457-637abb4f9353?q=80&w=2560&auto=format&fit=crop"
+  hero: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?q=80&w=1200&auto=format&fit=crop"
+  crest: ""
+
+componentStyles:
+  card:
+    background: "rgba(15, 21, 37, 0.72)"
+    border: "1px solid rgba(0, 212, 170, 0.18)"
+    shadow: "0 8px 32px rgba(0, 0, 0, 0.45)"
+  header:
+    background: "rgba(8, 12, 26, 0.85)"
+    borderBottom: "1px solid rgba(0, 212, 170, 0.22)"
+  sidebar:
+    background: "rgba(8, 12, 26, 0.92)"
+    borderRight: "1px solid rgba(0, 212, 170, 0.14)"
+  tab:
+    activeBackground: "rgba(0, 212, 170, 0.10)"
+    activeBorder: "#00d4aa"
+  backdrop:
+    filter: "brightness(0.35) saturate(0.8)"
+
+colorOverrides:
+  primary: "#00d4aa"
+  accent: "#ffd700"
+  success: "#2dd4bf"
+  warning: "#f59e0b"
+  danger: "#f43f5e"
+  muted: "#64748b"
+  border: "rgba(0, 212, 170, 0.14)"
+
+customCSS: |
+  /* Engineering grid overlay */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+      linear-gradient(rgba(0, 212, 170, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 212, 170, 0.03) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  /* Notched corner utility for cards */
+  .plugin-learning-hub .card-notched {
+    clip-path: polygon(
+      0 8px, 8px 0,
+      calc(100% - 8px) 0, 100% 8px,
+      100% calc(100% - 8px), calc(100% - 8px) 100%,
+      8px 100%, 0 calc(100% - 8px)
+    );
+  }
+
+  /* Typing cursor animation for extraction logs */
+  @keyframes blink-caret {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+  .plugin-learning-hub .cursor-blink::after {
+    content: "▌";
+    margin-left: 2px;
+    color: var(--theme-color-primary);
+    animation: blink-caret 1s step-end infinite;
+  }
+
+  /* Subtle scanline texture */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.08) 2px,
+      rgba(0, 0, 0, 0.08) 4px
+    );
+    mix-blend-mode: multiply;
+  }

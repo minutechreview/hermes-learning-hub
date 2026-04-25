@@ -1,0 +1,14 @@
+{
+  "name": "learning-hub",
+  "label": "Learning Hub",
+  "description": "SCORM extraction operations center — extract, catalog, and query e-learning content directly from the dashboard.",
+  "icon": "BookOpen",
+  "version": "1.0.0",
+  "tab": {
+    "path": "/learning-hub",
+    "position": "end"
+  },
+  "slots": ["sidebar", "footer-right"],
+  "entry": "dist/index.js",
+  "api": "plugin_api.py"
+}
