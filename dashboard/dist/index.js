@@ -15,7 +15,7 @@
 
   const SDK = window.__HERMES_PLUGIN_SDK__;
   const { React } = SDK;
-  const { Card, CardHeader, CardTitle, CardContent, Badge, Button, Input, Label, Select, Separator, Tabs, TabsList, TabsTrigger, TabsContent } = SDK.components;
+  const { Card, CardHeader, CardTitle, CardContent, Badge, Button, Input, Label, Select, Separator, Tabs, TabsList, TabsTrigger } = SDK.components;
   const { useState, useEffect, useCallback, useRef } = SDK.hooks;
   const { cn } = SDK.utils;
 
@@ -404,20 +404,34 @@
   // -----------------------------------------------------------------------
 
   function LearningHubPage() {
+    const [activeTab, setActiveTab] = useState("extractor");
+
+    const tabButton = function (id, label) {
+      const isActive = activeTab === id;
+      return React.createElement("button", {
+        key: id,
+        onClick: function () { setActiveTab(id); },
+        className: cn(
+          "px-4 py-2 text-xs font-medium tracking-wider uppercase transition-colors cursor-pointer border-b-2",
+          isActive ? "border-primary text-primary" : "border-transparent text-muted-foreground hover:text-foreground"
+        ),
+      }, label);
+    };
+
     return React.createElement("div", { className: "plugin-learning-hub flex flex-col gap-6" },
       React.createElement("div", { className: "flex items-center gap-3" },
         React.createElement("h1", { className: "text-2xl font-bold tracking-tight" }, "Learning Hub"),
         React.createElement(Badge, { variant: "outline", className: "font-mono text-[0.65rem]" }, "OPS CENTER"),
       ),
-      React.createElement(Tabs, { defaultValue: "extractor" },
-        React.createElement(TabsList, null,
-          React.createElement(TabsTrigger, { value: "extractor" }, "Extractor"),
-          React.createElement(TabsTrigger, { value: "library" }, "Library"),
-          React.createElement(TabsTrigger, { value: "query" }, "Query"),
+      React.createElement("div", { className: "flex flex-col gap-6" },
+        React.createElement("div", { className: "flex border-b border-border" },
+          tabButton("extractor", "Extractor"),
+          tabButton("library", "Library"),
+          tabButton("query", "Query"),
         ),
-        React.createElement(TabsContent, { value: "extractor" }, React.createElement(ExtractorTab)),
-        React.createElement(TabsContent, { value: "library" }, React.createElement(LibraryTab)),
-        React.createElement(TabsContent, { value: "query" }, React.createElement(QueryTab)),
+        activeTab === "extractor" && React.createElement(ExtractorTab),
+        activeTab === "library" && React.createElement(LibraryTab),
+        activeTab === "query" && React.createElement(QueryTab),
       ),
     );
   }
@@ -432,5 +446,19 @@
   if (PLUGINS && PLUGINS.registerSlot) {
     PLUGINS.registerSlot("learning-hub", "sidebar", SidebarSlot);
     PLUGINS.registerSlot("learning-hub", "footer-right", FooterSlot);
+
+    /* Page-scoped slots — forward-compatible with Hermes Agent PR #15658.
+       These silently no-op on v0.11.0 and render automatically once the
+       dashboard supports page-scoped injection (sessions:top, skills:top, etc.). */
+    function SkillsTopBanner() {
+      return React.createElement(Card, { className: "mb-4 border-primary/30" },
+        React.createElement(CardContent, { className: "py-2 flex items-center gap-2 text-xs" },
+          React.createElement("span", { className: "inline-block h-2 w-2 rounded-full bg-primary animate-pulse" }),
+          "Learning Hub extraction engine ready — ",
+          React.createElement("a", { href: "#/learning-hub", className: "underline text-primary" }, "Open Ops Center")
+        )
+      );
+    }
+    PLUGINS.registerSlot("learning-hub", "skills:top", SkillsTopBanner);
   }
 })();

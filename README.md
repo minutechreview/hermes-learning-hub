@@ -45,6 +45,18 @@ curl http://localhost:8080/api/dashboard/plugins/rescan
 
 ---
 
+## Forward-Compatible with Page-Scoped Slots
+
+Learning Hub is already wired for the new **page-scoped slot system** introduced in [Hermes PR #15658](https://github.com/NousResearch/hermes-agent/pull/15658) (merged by Teknium). On newer Hermes versions it injects a live banner into the **Skills** page top area (`skills:top`) without overriding the route. On current v0.11.0 installs the banner silently no-ops so nothing breaks.
+
+| Slot | Where it appears | Behaviour on v0.11.0 |
+|------|------------------|----------------------|
+| `skills:top` | Above the skills grid | Silently ignored (future-proof) |
+| `sidebar` | Global left sidebar | Renders now ✓ |
+| `footer-right` | Global footer right | Renders now ✓ |
+
+---
+
 ## Usage
 
 1. Select the **Deep Learn** theme from the dashboard theme picker.

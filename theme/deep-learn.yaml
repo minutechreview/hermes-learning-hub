@@ -7,8 +7,8 @@ description: >
 
 palette:
   background: "#080c1a"
-  midground: "#0f1525"
-  foreground: "#e8ecf3"
+  midground: "#e8ecf3"
+  foreground: "#00d4aa"
   warmGlow: "#00d4aa"
   noiseOpacity: 0.03
 
